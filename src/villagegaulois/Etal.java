@@ -3,9 +3,9 @@ package villagegaulois;
 import personnages.Gaulois;
 import produits.Produit;
 
-public class Etal <P extends Produit> implements IEtal<P>{
+public class Etal <P extends Produit> implements IEtal{
 	private Gaulois vendeur;
-	private P produit;
+	private Produit produit;
 	private int quantiteDebutMarche;
 	private int quantite;
 	private boolean etalOccupe = false;
@@ -26,21 +26,21 @@ public class Etal <P extends Produit> implements IEtal<P>{
 	}
 	
 	@Override
-	public P getProduit() {
+	public Produit getProduit() {
 		return produit;
 	}
 	
 	@Override
-	public void occuperEtal(Gaulois vendeur, P produit, int quantite) {
+	public void occuperEtal(Gaulois vendeur, Produit produit, int quantite) {
 		this.vendeur = vendeur;
-		this.produit = produit;
+		this.produit = (P) produit;
 		this.quantite = quantite;
 		quantiteDebutMarche = quantite;
 		etalOccupe = true;
 	}
 
 	@Override
-	public boolean contientProduit(P produit) {
+	public boolean contientProduit(Produit produit) {
 		return this.produit.equals(produit);
 	}
 
