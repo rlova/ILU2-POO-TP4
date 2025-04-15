@@ -1,17 +1,68 @@
 package scenarioTest;
 
+import java.security.PublicKey;
+
 import personnages.Gaulois;
 import produits.Poisson;
+import produits.Produit;
 import produits.Sanglier;
 import villagegaulois.Etal;
 import villagegaulois.IEtal;
+import villagegaulois.IVillage;
 
 public class Scenario {
 
 	public static void main(String[] args) {
 
 		// TODO Partie 4 : creer de la classe anonyme Village
-
+		IVillage village = new IVillage() {
+		    private IEtal<?>[] etals = new IEtal<?>[3]; // Tableau pour stocker les étals
+		    
+		    @Override
+		    public <P extends Produit> boolean installerVendeur(Etal<P> etal, Gaulois vendeur, P[] produit, int prix) {
+		        etal.installerVendeur(vendeur, produit, prix);
+		        // Ajouter l'étal au tableau
+		        for (int i = 0; i < etals.length; i++) {
+		            if (etals[i] == null) {
+		                etals[i] = etal;
+		                return true;
+		            }
+		        }
+		        return false;
+		    }
+		    
+		    @Override
+		    public void acheterProduit(String produit, int quantiteSouhaitee) {
+		        // Implémentation similaire à ScenarioTest.acheterProduit()
+		        int quantiteRestante = quantiteSouhaitee;
+		        for (int i = 0; i < etals.length && quantiteRestante > 0; i++) {
+		            if (etals[i] != null) {
+		                int quantiteDisponible = etals[i].contientProduit(produit, quantiteRestante);
+		                if (quantiteDisponible > 0) {
+		                    int prix = etals[i].acheterProduit(quantiteDisponible);
+		                    String chaineProduit = quantiteDisponible > 1 ? produit + "s" : produit;
+		                    System.out.println("A l'étal n° " + (i + 1) + ", j'achète " + quantiteDisponible + " " + chaineProduit
+		                            + " et je paye " + prix + " sous.");
+		                    quantiteRestante -= quantiteDisponible;
+		                }
+		            }
+		        }
+		        String chaineProduit = quantiteSouhaitee > 1 ? produit + "s" : produit;
+		        System.out.println("Je voulais " + quantiteSouhaitee + " " + chaineProduit + ", j'en ai acheté "
+		                + (quantiteSouhaitee - quantiteRestante) + ".");
+		    }
+		    
+		    @Override
+		    public String toString() {
+		        StringBuilder sb = new StringBuilder();
+		        for (IEtal<?> etal : etals) {
+		            if (etal != null) {
+		                sb.append(etal.etatEtal());
+		            }
+		        }
+		        return sb.toString();
+		    }
+		};
 		// fin
 
 		Gaulois ordralfabetix = new Gaulois("Ordralfabétix", 9);
