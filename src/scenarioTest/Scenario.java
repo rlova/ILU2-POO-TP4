@@ -16,7 +16,7 @@ public class Scenario {
 
 		// TODO Partie 4 : creer de la classe anonyme Village
 		IVillage village = new IVillage() {
-		    private IEtal<?>[] etals = new IEtal<?>[3]; // Tableau pour stocker les étals
+		    private Etal<?>[] etals = new Etal<?>[3]; // Tableau pour stocker les étals
 		    
 		    @Override
 		    public <P extends Produit> boolean installerVendeur(Etal<P> etal, Gaulois vendeur, P[] produit, int prix) {
@@ -30,6 +30,7 @@ public class Scenario {
 		        }
 		        return false;
 		    }
+		    
 		    
 		    @Override
 		    public void acheterProduit(String produit, int quantiteSouhaitee) {
@@ -54,13 +55,13 @@ public class Scenario {
 		    
 		    @Override
 		    public String toString() {
-		        StringBuilder sb = new StringBuilder();
-		        for (IEtal<?> etal : etals) {
+		        StringBuilder chaine = new StringBuilder();
+		        for (Etal<?> etal : etals) {
 		            if (etal != null) {
-		                sb.append(etal.etatEtal());
+		                chaine.append(etal.etatEtal());
 		            }
 		        }
-		        return sb.toString();
+		        return chaine.toString();
 		    }
 		};
 		// fin
@@ -69,9 +70,9 @@ public class Scenario {
 		Gaulois obelix = new Gaulois("Obélix", 20);
 		Gaulois asterix = new Gaulois("Astérix", 6);
 
-		IEtal<Sanglier> etalSanglierObelix = new Etal<>();
-		IEtal<Sanglier> etalSanglierAsterix = new Etal<>();
-		IEtal<Poisson> etalPoisson = new Etal<>();
+		Etal<Sanglier> etalSanglierObelix = new Etal<>();
+		Etal<Sanglier> etalSanglierAsterix = new Etal<>();
+		Etal<Poisson> etalPoisson = new Etal<>();
 
 		Sanglier sanglier1 = new Sanglier(2000, obelix);
 		Sanglier sanglier2 = new Sanglier(1500, obelix);

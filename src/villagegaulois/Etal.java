@@ -45,13 +45,6 @@ import produits.Produit;
  
  	@Override
  	public int contientProduit(String produit, int quantiteSouhaitee) {
-// 		int quantiteAVendre = 0;
-// 		if (nbProduit!=0 && this.produit[0].getNom().equals(produit)) {
-// 			quantiteAVendre = quantiteSouhaitee;
-// 		} else if (quantiteSouhaitee>2) {
-// 			quantiteAVendre = nbProduit;
-// 		}
-// 		return quantiteAVendre;
  		int quantiteAVendre = 0;
  		if (nbProduit == 0 || !this.produit[0].getNom().equals(produit)) {
  	        quantiteAVendre = quantiteSouhaitee;
